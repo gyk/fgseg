@@ -9,15 +9,16 @@ disp('This example shows the basic use of the foreground ');
 disp('extraction package.  We''ll use a simple video of ');
 disp('someone walking.');
 disp(' ');
-disp('>> avi = aviread(''SampleVideo.avi'');');
-disp('>> frames = {avi.cdata};');
+disp('>> avi = VideoReader(''SampleVideo.avi'');');
+disp('>> frames{i} = avi.read(i);');
 
-avi = aviread('SampleVideo.avi');
-frames = {avi.cdata};
-for i = 1:length(frames)
-    imagesc(frames{i});
-    axis image off
-    drawnow;
+avi = VideoReader('SampleVideo.avi');
+lastFrame = avi.read(Inf);
+nFrames = avi.NumberOfFrames;
+
+frames = cell(nFrames, 1);
+for i = 1:nFrames
+    frames{i} = avi.read(i);
 end;
 
 disp(' ');
