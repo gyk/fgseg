@@ -11,7 +11,7 @@
 %   If C is 2xN, an exact cut is returned using GCUT.
 %   If C has more than two rows, then an approximate labeling is returned.
 
-function label = graphlabel(C,P)
+function label = graphLabel(C,P)
 
 cut = gcut([zeros(2),C;C',P],[1 2]);
 label = cut(3:end);  % We want just the pixel labels
