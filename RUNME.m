@@ -4,6 +4,7 @@
 % March 10, 2005.
 % Please read copyright.txt
 
+%% Reads video
 disp(' ');
 disp('This example shows the basic use of the foreground ');
 disp('extraction package.  We''ll use a simple video of ');
@@ -21,6 +22,8 @@ for i = 1:nFrames
     frames{i} = avi.read(i);
 end;
 
+
+%% Extracts foreground
 disp(' ');
 disp('First we''ll call extractForeground using the ');
 disp('default settings.  (This may take a while.)');
@@ -35,6 +38,7 @@ for i = 1:length(fg)
 end;
 
 
+%% Choose particular significanceThreshold value
 disp(' ');
 disp('This particular video gives better results with a ');
 disp('slightly lowered significanceThreshold.');
