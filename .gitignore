@@ -1,0 +1,9 @@
+
+*.zip
+*.avi
+
+*.def
+*.mexw32
+*.mexw64
+*.mexa64
+*.mexmaci64
