@@ -32,7 +32,7 @@
 void 
 mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   int i, j, k, ndim, npix, nzmax;
-  int *offset, *ir, *jc;
+  mwIndex *offset, *ir, *jc;
   double *out, *inp;
   char *mode;
   
@@ -55,7 +55,7 @@ mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 
   // set up offset array
   inp = mxGetPr(prhs[0]);
-  offset = (int*)mxMalloc((ndim+1)*sizeof(int));
+  offset = (mwIndex*)mxMalloc((ndim+1)*sizeof(mwIndex));
   offset[0] = 1;
   for (i = 0; i < ndim; i++) {
     offset[i+1] = (int)(offset[i]*inp[i]);
@@ -161,7 +161,7 @@ mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   } else if (*mode == 'e') {
     // Edge image
     bool *edge;
-    const int *edim;
+    const mwIndex *edim;
     nzmax = npix*2*ndim;
     //mexPrintf("edge: %d\n",nzmax);
     if (nrhs < 3) {
@@ -211,7 +211,7 @@ mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
   } else if (*mode == 'd') {
     // deltas
     double *img;
-    const int *idim;
+    const mwIndex *idim;
     nzmax = npix*2*ndim;
     //mexPrintf("edge: %d\n",nzmax);
     if (nrhs < 3) {
