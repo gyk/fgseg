@@ -9,6 +9,11 @@
 
 /****************************************************************************/
 
+/* 
+ * FIXME: There remain several warnings although it compiles on 64-bit Matlab 
+ * by `mex -v -largeArrayDims gcut.cpp`.
+ */
+
 #include "mex.h"
 
 #define malloc mxMalloc
@@ -124,7 +129,7 @@ void matlabParse(int nrhs, const mxArray *prhs[], long *n_ad, long *m_ad, node *
   int     j,k;                  /* temporary */
 
   bool sparse;
-  int *ir, *jc;
+  mwIndex *ir, *jc;
   double *cost, *ss;
 
   // check format of arguments
@@ -141,8 +146,8 @@ void matlabParse(int nrhs, const mxArray *prhs[], long *n_ad, long *m_ad, node *
   }
   cost = mxGetPr(prhs[0]);
   if (sparse) {
-    ir = mxGetIr(prhs[0]);
-    jc = mxGetJc(prhs[0]);
+    ir = (mwIndex*)mxGetIr(prhs[0]);
+    jc = (mwIndex*)mxGetJc(prhs[0]);
     m = jc[n];
   } else {
     m = 0;
