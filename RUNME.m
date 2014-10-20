@@ -14,8 +14,18 @@ disp('>> avi = VideoReader(''SampleVideo.avi'');');
 disp('>> frames{i} = avi.read(i);');
 
 avi = VideoReader('SampleVideo.avi');
-lastFrame = avi.read(Inf);
-nFrames = avi.NumberOfFrames;
+while true
+	nFrames = avi.NumberOfFrames;
+	if nFrames <= 0
+		lastFrame = avi.read(Inf);
+	else
+		% drops the last frame
+		nFrames = nFrames - 1;
+		break;
+	end
+end
+
+nFrames = min(nFrames, 80);
 
 frames = cell(nFrames, 1);
 for i = 1:nFrames
