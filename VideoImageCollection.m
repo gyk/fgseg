@@ -11,9 +11,16 @@ classdef VideoImageCollection < handle
 	backgroundSDs;
 	saturationMeans;
 	%----------------%
+	graphAlpha = 1;
+	graphThreshold = 6;
+	%----------------%
 	videoStart;
 	mocapScaling;
 	associatedMotions;  % associated MotionCollection object
+	end
+
+	properties (Access = private)
+	connections;
 	end
 
 	methods
@@ -44,6 +51,10 @@ classdef VideoImageCollection < handle
 		obj.backgroundSDs = cellfun(@sqrt, bg_vars, 'UniformOutput', false);
 		obj.videoReader = VideoReader(videoFileName);
 		obj.nImages = obj.videoReader.NumberOfFrames;
+
+		% Graph-cut preparation -- the weights of links between
+		% pixel vertices:
+		obj.connections = pixCon(size(bg_means{1}(:, :, 1)));
 
 		% prepares for shadow removal
 		for i = 1:length(obj.backgroundMeans)
