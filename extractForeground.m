@@ -271,13 +271,17 @@ end;
 % supplied that have the specified ranked size(s).
 
 function fgr = fgRanked(bin,rank)
+[fg, ncc] = bwlabel(bin,4);
+if ncc == 0
+    fgr = zeros(size(bin));
+    return;
+end
 
-fg = bwlabel(bin,4);
-maxfg = max(fg(:));
-h = hist(fg(find(bin)),[1:maxfg]);
-[sh,sr] = sort(-h);
-if (rank < 1)|(rank > max(find(sh > 0)))
-    fgr = zeros(size(img))
+h = hist(fg(:),0:ncc);
+h(1) = [];
+[sh,sr] = sort(h,'descend');
+if rank < 1 || rank > max(find(sh > 0))
+    fgr = zeros(size(bin));
 else
     fgr = (fg==sr(rank));
 end;
